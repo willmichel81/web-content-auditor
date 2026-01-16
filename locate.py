@@ -25,15 +25,20 @@ def clean_url(url):
     return url
  
 def is_php_html_or_index(url):
-    flag = False;
-    excludes = ['document-search', 'files', 'node', 'taxonomy','document','content','media','calendar','pdf','.doc','news','xlsx','.txt','.xls']
-    for x in excludes:
-        if x in url.lower():
-            flag = True
-    if flag:
+    # Parse the URL to get the path
+    parsed = urlparse(url)
+    path = parsed.path.lower()
+    
+    # Check for excluded keywords in the path
+    excludes = ['document-search', 'files', 'node', 'taxonomy', 'document', 'content', 'media', 'calendar', 'pdf', '.doc', 'news', 'xlsx', '.txt', '.xls']
+    if any(excl in path for excl in excludes):
         return False
-    else:
-        return True
+    
+    # Check if it's a PHP, HTML file, or index (no extension)
+    if '.' not in path:
+        return True  # Likely an index page
+    ext = path.split('.')[-1]
+    return ext in ['php', 'html']
   
 
 # Check if link is same domain
