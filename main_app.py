@@ -9,8 +9,8 @@ from locate import find_links, extract_internal_links, clean_url, csv_export
 
 # List of websites to crawl
 websites = [
-   'https://example.com'
-    
+#    'https://example.com'
+    'https://health.mo.gov'
     # Add more sites
 ]
 
@@ -33,10 +33,11 @@ for root_url in websites:
     while to_visit:
         current_url = to_visit.popleft()
 
-        if current_url in visited:
+        cleaned_current = clean_url(current_url)
+        if cleaned_current in visited:
             continue
 
-        visited.add(current_url)
+        visited.add(cleaned_current)
 
         try:
             # if (clean_url(current_url) in visited):
@@ -49,11 +50,11 @@ for root_url in websites:
             # Check for links (search_element controls where we look)
             embeds = find_links(soup, search_string, search_element, current_url)
             for embed in embeds:
-                if current_url not in found_links_set:
+                if cleaned_current not in found_links_set:
                     found_links.append({
-                        "page": current_url
+                        "page": cleaned_current
                     })
-                    found_links_set.add(current_url)
+                    found_links_set.add(cleaned_current)
 
 
             # Add new internal links to queue
