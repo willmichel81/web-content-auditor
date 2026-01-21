@@ -39,7 +39,6 @@ for root_url in websites:
         visited.add(cleaned_current)
 
         try:
-            # if (clean_url(current_url) in visited):
             print(f"Visiting: {current_url}")
             response = requests.get(current_url, timeout=20, verify=True)
             # Suppress the InsecureRequestWarning
@@ -67,6 +66,8 @@ for root_url in websites:
             print(f"Error fetching {current_url}: {e}")
 
     # Export results to CSV params (filename, data, csvfieldnames)
+    # .sort will allow the csv to be in alphabetical order
+    found_links.sort(key=lambda x: x["page"])
     csv_export("links.csv", found_links, ["page"])
 
 
