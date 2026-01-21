@@ -9,8 +9,7 @@ from locate import find_links, extract_internal_links, clean_url, csv_export
 
 # List of websites to crawl
 websites = [
-#    'https://example.com'
-    'https://health.mo.gov'
+   'https://example.com'
     # Add more sites
 ]
 
